@@ -45,7 +45,7 @@ const menuItems = [
   { label: "about", href: "#about", ariaLabel: "About", rotation: 8, hoverStyles: { bgColor: "#10b981", textColor: "#ffffff" } },
   { label: "events", href: "#events", ariaLabel: "Events", rotation: 8, hoverStyles: { bgColor: "#9900ff", textColor: "#ffffff" } },
   { label: "team", href: "#team", ariaLabel: "Team", rotation: 8, hoverStyles: { bgColor: "#ef4444", textColor: "#ffffff" } },
-  { label: "contact", href: "#", ariaLabel: "Contact", rotation: -8, hoverStyles: { bgColor: "#8b5cf6", textColor: "#ffffff" } },
+  { label: "contact", href: "#contact", ariaLabel: "Contact", rotation: -8, hoverStyles: { bgColor: "#8b5cf6", textColor: "#ffffff" } },
 ];
 
 const pastEvents: EventItem[] = [
