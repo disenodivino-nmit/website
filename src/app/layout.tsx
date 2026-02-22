@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   title: "Dise\u00f1o Divino \u2014 The UI/UX Club",
   description:
     "A student-run UI/UX design club crafting divine digital experiences.",
+  icons: {
+    icon: "/logos/Di. 4k.png",
+  },
 };
 
 export default function RootLayout({
