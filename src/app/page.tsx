@@ -513,12 +513,12 @@ export default function Home() {
             divine digital experiences &#8212; one pixel at a time.
           </p>
           <div className="mt-10 flex gap-4">
-            <button className="rounded-full bg-[#40e0d0] px-8 py-3 text-sm font-semibold text-black hover:bg-[#33b3a6] transition-colors">
+            <a href="#events" className="rounded-full bg-[#40e0d0] px-8 py-3 text-sm font-semibold text-black hover:bg-[#33b3a6] transition-colors">
               Explore Our Work
-            </button>
-            <button className="rounded-full border border-white/30 px-8 py-3 text-sm font-semibold text-white hover:border-[#40e0d0] hover:text-[#40e0d0] transition-colors">
+            </a>
+            <a href="#contact" className="rounded-full border border-white/30 px-8 py-3 text-sm font-semibold text-white hover:border-[#40e0d0] hover:text-[#40e0d0] transition-colors">
               Join the Club
-            </button>
+            </a>
           </div>
         </section>
 
