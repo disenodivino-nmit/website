@@ -653,14 +653,14 @@ export default function Home() {
         <section
           id="team"
           ref={teamSectionRef}
-          className="relative z-10"
+          className="relative z-10 overflow-x-clip"
           style={{ height: "700vh" }}
         >
           {/* White-to-slight-gray gradient background */}
           <div className="absolute inset-0 bg-gradient-to-b from-white via-[#f0f0f0] to-[#e8e8e8] z-0" />
 
           {/* Sticky container that holds the visible carousel viewport */}
-          <div className="sticky top-0 h-screen z-10 flex flex-col py-10 overflow-x-hidden overflow-y-hidden">
+          <div className="sticky top-0 h-screen z-10 flex flex-col py-6">
             {/* Animated content wrapper — starts hidden, revealed on scroll */}
             <div
               ref={teamContentRef}
@@ -668,7 +668,7 @@ export default function Home() {
               style={{ opacity: 0, transform: "translateY(40px)" }}
             >
               {/* Section Header */}
-              <div className="text-center pb-4 px-6 flex-shrink-0">
+              <div className="text-center pb-2 px-6 flex-shrink-0">
                 <p className="text-sm uppercase tracking-[0.3em] text-[#0d9488] mb-2 font-medium font-body">
                   The People
                 </p>
@@ -680,8 +680,8 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Faculty Advisor — Same style as team cards */}
-              <div className="flex justify-center px-6 md:px-12 mb-8 flex-shrink-0">
+              {/* Faculty Advisor — centered above the carousel */}
+              <div className="flex justify-center px-6 md:px-12 mb-4 flex-shrink-0">
                 <div className="flex-shrink-0 w-[280px] sm:w-[300px] rounded-3xl border border-[#d4a853]/30 bg-white/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-6 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_12px_40px_rgba(212,168,83,0.15)] hover:bg-white/60 group">
                   <div className="w-24 h-24 rounded-full flex items-center justify-center mb-5 shadow-lg" style={{ background: 'linear-gradient(135deg, #d4a853, #b8860b)' }}>
                     <span className="text-2xl font-bold text-white drop-shadow-md">MGK</span>
@@ -694,8 +694,8 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Carousel Track — fills remaining space, cards aligned to top */}
-              <div className="flex-1 flex items-start pt-4 w-full px-6 md:px-12 min-h-0 overflow-hidden">
+              {/* Carousel Track */}
+              <div className="flex-1 flex items-center w-full px-6 md:px-12 min-h-0">
                 <div
                   ref={teamTrackRef}
                   className="flex gap-6 will-change-transform pr-24"
