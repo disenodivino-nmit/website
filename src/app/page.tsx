@@ -432,7 +432,7 @@ export default function Home() {
     <ClickSpark sparkColor="#40e0d0" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
       <main className="relative bg-black">
         {/* Single Continuous Ballpit Background */}
-        <div className="fixed inset-0 z-0">
+        <div className="fixed inset-0 z-0 pointer-events-none">
           <Ballpit
             count={50}
             gravity={0}

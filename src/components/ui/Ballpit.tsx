@@ -324,12 +324,13 @@ function L() {
 
 function TouchStart(ev: TouchEvent) {
   if (ev.touches.length > 0) {
-    ev.preventDefault();
     A.x = ev.touches[0].clientX;
     A.y = ev.touches[0].clientY;
+    let handled = false;
     for (const [elem, st] of b) {
       const rect = elem.getBoundingClientRect();
       if (D(rect)) {
+        handled = true;
         st.touching = true;
         P(st, rect);
         if (!st.hover) {
@@ -339,18 +340,20 @@ function TouchStart(ev: TouchEvent) {
         st.onMove(st);
       }
     }
+    if (handled) ev.preventDefault();
   }
 }
 
 function TouchMove(ev: TouchEvent) {
   if (ev.touches.length > 0) {
-    ev.preventDefault();
     A.x = ev.touches[0].clientX;
     A.y = ev.touches[0].clientY;
+    let handled = false;
     for (const [elem, st] of b) {
       const rect = elem.getBoundingClientRect();
       P(st, rect);
       if (D(rect)) {
+        handled = true;
         if (!st.hover) {
           st.hover = true;
           st.touching = true;
@@ -361,6 +364,7 @@ function TouchMove(ev: TouchEvent) {
         st.onMove(st);
       }
     }
+    if (handled) ev.preventDefault();
   }
 }
 
