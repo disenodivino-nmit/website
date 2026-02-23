@@ -324,7 +324,7 @@ function TeamCard({ member }: { member: TeamMember }) {
   const initials = member.name.split(" ").map((n) => n[0]).join("");
 
   return (
-    <div className="flex-shrink-0 w-full md:w-[280px] lg:w-[300px] rounded-3xl border border-black/[0.08] bg-white/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-5 sm:p-6 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] hover:bg-white/60 group">
+    <div className="flex-shrink-0 w-[280px] rounded-3xl border border-black/[0.08] bg-white/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-5 sm:p-6 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] hover:bg-white/60 group">
       {/* Avatar */}
       <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#40e0d0] to-[#9900ff] flex items-center justify-center mb-5 shadow-lg">
         {member.avatar ? (
@@ -440,7 +440,7 @@ export default function Home() {
 
   return (
     <ClickSpark sparkColor="#40e0d0" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
-      <main className="relative bg-black overflow-x-hidden">
+      <main className="relative bg-black overflow-x-clip">
         {/* Single Continuous Ballpit Background */}
         <div className="fixed inset-0 z-0 pointer-events-none">
           <Ballpit
@@ -700,7 +700,7 @@ export default function Home() {
               </div>
 
               {/* Team Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[600px] mx-auto justify-items-center">
                 {teamMembers.map((member, i) => (
                   <TeamCard key={i} member={member} />
                 ))}
