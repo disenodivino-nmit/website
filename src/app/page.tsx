@@ -442,13 +442,13 @@ export default function Home() {
     <ClickSpark sparkColor="#40e0d0" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
       <main className="relative bg-black overflow-x-clip">
         {/* Single Continuous Ballpit Background */}
-        <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className={`fixed inset-0 z-0 ${isMobile ? "pointer-events-none" : ""}`}>
           <Ballpit
             count={50}
             gravity={0}
             friction={0.9975}
             wallBounce={0.95}
-            followCursor={false}
+            followCursor={!isMobile}
             colors={["#40e0d0", "#40e0d0", "#000000", "#9900ff", "#ffffff"]}
           />
         </div>
