@@ -1,14 +1,21 @@
 .bubble-menu {
   left: 0;
   right: 0;
-  top: 2em;
+  top: 1em;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 0 2em;
+  padding: 0 1em;
   pointer-events: none;
   z-index: 99;
+}
+
+@media (min-width: 768px) {
+  .bubble-menu {
+    top: 2em;
+    padding: 0 2em;
+  }
 }
 
 .bubble-menu.fixed {
@@ -20,16 +27,19 @@
 }
 
 .bubble-menu .bubble {
-  --bubble-size: 48px;
+  --bubble-size: 44px;
   width: var(--bubble-size);
   height: var(--bubble-size);
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .bubble-menu .logo-bubble,
@@ -118,6 +128,16 @@
 
   .bubble-menu .logo-bubble {
     padding: 0 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .bubble-menu .logo-bubble {
+    padding: 0 10px;
+  }
+
+  .bubble-menu .logo-content {
+    width: 90px;
   }
 }
 
@@ -237,11 +257,12 @@
   .bubble-menu-items {
     padding-top: 0px;
     align-items: flex-start;
-    padding-top: 120px;
+    padding-top: 90px;
   }
 
   .bubble-menu-items .pill-list {
-    row-gap: 16px;
+    row-gap: 12px;
+    padding: 0 16px;
   }
 
   .bubble-menu-items .pill-list .pill-col {
@@ -251,9 +272,9 @@
   }
 
   .bubble-menu-items .pill-link {
-    font-size: clamp(1.2rem, 3vw, 4rem);
-    padding: clamp(1rem, 2vw, 2rem) 0;
-    min-height: 80px;
+    font-size: clamp(1.1rem, 5vw, 2rem);
+    padding: clamp(0.8rem, 2vw, 1.5rem) 0;
+    min-height: 60px;
   }
 
   .bubble-menu-items .pill-link:hover {

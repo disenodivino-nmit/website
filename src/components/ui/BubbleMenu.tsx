@@ -216,6 +216,10 @@ export default function BubbleMenu({
                   href={item.href}
                   aria-label={item.ariaLabel || item.label}
                   className="pill-link"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    onMenuClick?.(false);
+                  }}
                   style={{
                     '--item-rot': `${item.rotation ?? 0}deg`,
                     '--pill-bg': menuBg,

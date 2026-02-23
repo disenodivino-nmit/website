@@ -324,7 +324,7 @@ function TeamCard({ member }: { member: TeamMember }) {
   const initials = member.name.split(" ").map((n) => n[0]).join("");
 
   return (
-    <div className="flex-shrink-0 w-[280px] sm:w-[300px] rounded-3xl border border-black/[0.08] bg-white/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-6 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] hover:bg-white/60 group">
+    <div className="flex-shrink-0 w-full md:w-[280px] lg:w-[300px] rounded-3xl border border-black/[0.08] bg-white/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-5 sm:p-6 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] hover:bg-white/60 group">
       {/* Avatar */}
       <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#40e0d0] to-[#9900ff] flex items-center justify-center mb-5 shadow-lg">
         {member.avatar ? (
@@ -381,11 +381,21 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* ---- team section: 3-phase scroll animation ---- */
+  /* ---- team section: 3-phase scroll animation (desktop only) ---- */
   /* Phase 1 (0-25%): Just gradient background, content hidden            */
   /* Phase 2 (25-45%): Content + cards fade/slide in                      */
   /* Phase 3 (45-100%): Cards scroll horizontally right-to-left           */
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return; // Skip scroll animation on mobile
     const section = teamSectionRef.current;
     const track = teamTrackRef.current;
     const content = teamContentRef.current;
@@ -424,13 +434,13 @@ export default function Home() {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isMobile]);
 
   const shownEvents = eventsTab === "upcoming" ? upcomingEvents : pastEvents;
 
   return (
     <ClickSpark sparkColor="#40e0d0" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
-      <main className="relative bg-black">
+      <main className="relative bg-black overflow-x-hidden">
         {/* Single Continuous Ballpit Background */}
         <div className="fixed inset-0 z-0 pointer-events-none">
           <Ballpit
@@ -490,19 +500,19 @@ export default function Home() {
               alt="NMIT Logo"
               width={450}
               height={200}
-              className="mb-3 drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+              className="mb-3 w-full max-w-[280px] sm:max-w-[350px] md:max-w-[450px] h-auto drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]"
               style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }}
             />
-            <p className="text-xs md:text-base uppercase tracking-[0.5em] text-white/100 font-medium" style={{ textShadow: '0 0 15px rgba(255,255,255,0.15)' }}>
+            <p className="text-[10px] sm:text-xs md:text-base uppercase tracking-[0.15em] sm:tracking-[0.3em] md:tracking-[0.5em] text-white/100 font-medium text-center" style={{ textShadow: '0 0 15px rgba(255,255,255,0.15)' }}>
               Department of Artificial Intelligence &amp; Machine Learning
             </p>
           </div>
 
-          <p className="text-sm md:text-base uppercase tracking-[0.35em] text-[#40e0d0] mb-4 font-medium" style={{ textShadow: "0 0 20px rgba(64,224,208,0.3)" }}>
+          <p className="text-xs sm:text-sm md:text-base uppercase tracking-[0.15em] sm:tracking-[0.35em] text-[#40e0d0] mb-4 font-medium" style={{ textShadow: "0 0 20px rgba(64,224,208,0.3)" }}>
             The UI/UX Club
           </p>
           <h1
-            className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-none"
+            className="font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-none"
             style={{ textShadow: "0 4px 30px rgba(0,0,0,0.7), 0 0 80px rgba(0,0,0,0.5)" }}
           >
             <span className="text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.15)]">Dise&#241;o</span>{" "}
@@ -512,11 +522,11 @@ export default function Home() {
             Where creativity meets craft. We design, prototype, and build
             divine digital experiences &#8212; one pixel at a time.
           </p>
-          <div className="mt-10 flex gap-4">
-            <a href="#events" className="rounded-full bg-[#40e0d0] px-8 py-3 text-sm font-semibold text-black hover:bg-[#33b3a6] transition-colors">
+          <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto items-center">
+            <a href="#events" className="rounded-full bg-[#40e0d0] px-8 py-3 text-sm font-semibold text-black hover:bg-[#33b3a6] transition-colors w-full sm:w-auto text-center">
               Explore Our Work
             </a>
-            <a href="#contact" className="rounded-full border border-white/30 px-8 py-3 text-sm font-semibold text-white hover:border-[#40e0d0] hover:text-[#40e0d0] transition-colors">
+            <a href="#contact" className="rounded-full border border-white/30 px-8 py-3 text-sm font-semibold text-white hover:border-[#40e0d0] hover:text-[#40e0d0] transition-colors w-full sm:w-auto text-center">
               Join the Club
             </a>
           </div>
@@ -525,11 +535,11 @@ export default function Home() {
         {/* ============================================================ */}
         {/*  ABOUT SECTION                                                */}
         {/* ============================================================ */}
-        <section id="about" className="relative z-10 min-h-screen w-full py-24 px-6 md:px-12 lg:px-20">
+        <section id="about" className="relative z-10 min-h-screen w-full py-16 sm:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
           <div className="max-w-7xl mx-auto">
             <div className="mb-16 text-center">
               <p className="text-sm uppercase tracking-[0.3em] text-[#40e0d0] mb-3 font-medium" style={{ textShadow: '0 0 20px rgba(64,224,208,0.4)' }}>Who We Are</p>
-              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight" style={{ textShadow: '0 0 40px rgba(255,255,255,0.1)' }}>
+              <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight" style={{ textShadow: '0 0 40px rgba(255,255,255,0.1)' }}>
                 About Dise&#241;o Divino
               </h2>
             </div>
@@ -587,7 +597,7 @@ export default function Home() {
         {/* ============================================================ */}
         {/*  EVENTS SECTION                                               */}
         {/* ============================================================ */}
-        <section id="events" className="relative z-10 min-h-screen w-full py-24 px-6 md:px-12 lg:px-20">
+        <section id="events" className="relative z-10 min-h-screen w-full py-16 sm:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
           {/* Dark base + animated LightPillar background */}
           <div className="absolute inset-0 bg-[#050a14] z-0" />
           <div className="absolute inset-0 z-[1] overflow-hidden">
@@ -648,45 +658,40 @@ export default function Home() {
         </section>
 
         {/* ============================================================ */}
-        {/*  TEAM SECTION  (horizontal scroll-on-scroll carousel)         */}
+        {/*  TEAM SECTION                                                  */}
         {/* ============================================================ */}
         <section
           id="team"
           ref={teamSectionRef}
           className="relative z-10 overflow-x-clip"
-          style={{ height: "700vh" }}
+          style={{ height: isMobile ? "auto" : "700vh" }}
         >
           {/* White-to-slight-gray gradient background */}
           <div className="absolute inset-0 bg-gradient-to-b from-white via-[#f0f0f0] to-[#e8e8e8] z-0" />
 
-          {/* Sticky container that holds the visible carousel viewport */}
-          <div className="sticky top-0 h-screen z-10 flex flex-col py-6">
-            {/* Animated content wrapper — starts hidden, revealed on scroll */}
-            <div
-              ref={teamContentRef}
-              className="will-change-transform font-body flex flex-col h-full"
-              style={{ opacity: 0, transform: "translateY(40px)" }}
-            >
+          {isMobile ? (
+            /* ---- MOBILE: Simple vertical layout ---- */
+            <div className="relative z-10 py-16 px-4">
               {/* Section Header */}
-              <div className="text-center pb-2 px-6 flex-shrink-0">
+              <div className="text-center mb-8">
                 <p className="text-sm uppercase tracking-[0.3em] text-[#0d9488] mb-2 font-medium font-body">
                   The People
                 </p>
-                <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 tracking-tight">
+                <h2 className="font-display text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                   Meet Our Team
                 </h2>
-                <p className="mt-3 text-base text-gray-500 max-w-lg mx-auto font-body">
+                <p className="mt-3 text-sm text-gray-500 max-w-sm mx-auto font-body">
                   The creative minds behind every event, every pixel, and every experience.
                 </p>
               </div>
 
-              {/* Faculty Advisor — centered above the carousel */}
-              <div className="flex justify-center px-6 md:px-12 mb-4 flex-shrink-0">
-                <div className="flex-shrink-0 w-[280px] sm:w-[300px] rounded-3xl border border-[#d4a853]/30 bg-white/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-6 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_12px_40px_rgba(212,168,83,0.15)] hover:bg-white/60 group">
-                  <div className="w-24 h-24 rounded-full flex items-center justify-center mb-5 shadow-lg" style={{ background: 'linear-gradient(135deg, #d4a853, #b8860b)' }}>
-                    <span className="text-2xl font-bold text-white drop-shadow-md">MGK</span>
+              {/* Faculty Advisor */}
+              <div className="flex justify-center mb-6">
+                <div className="w-full max-w-[280px] rounded-3xl border border-[#d4a853]/30 bg-white/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-6 flex flex-col items-center text-center">
+                  <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-lg" style={{ background: 'linear-gradient(135deg, #d4a853, #b8860b)' }}>
+                    <span className="text-xl font-bold text-white drop-shadow-md">MGK</span>
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-1">Prof. Madhura G K</h3>
+                  <h3 className="text-base font-bold text-gray-900 mb-1">Prof. Madhura G K</h3>
                   <span className="inline-block rounded-full px-3 py-0.5 text-xs font-semibold text-white mb-3 tracking-wide uppercase" style={{ background: 'linear-gradient(135deg, #d4a853, #b8860b)' }}>
                     Faculty Advisor
                   </span>
@@ -694,26 +699,73 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Carousel Track */}
-              <div className="flex-1 flex items-center w-full px-6 md:px-12 min-h-0">
-                <div
-                  ref={teamTrackRef}
-                  className="flex gap-6 will-change-transform pr-24"
-                  style={{ transform: "translateX(0px)", width: "max-content" }}
-                >
-                  {teamMembers.map((member, i) => (
-                    <TeamCard key={i} member={member} />
-                  ))}
-                </div>
+              {/* Team Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                {teamMembers.map((member, i) => (
+                  <TeamCard key={i} member={member} />
+                ))}
               </div>
             </div>
-          </div>
+          ) : (
+            /* ---- DESKTOP: Horizontal scroll-on-scroll carousel ---- */
+            <>
+              {/* Sticky container that holds the visible carousel viewport */}
+              <div className="sticky top-0 h-screen z-10 flex flex-col py-6">
+                {/* Animated content wrapper — starts hidden, revealed on scroll */}
+                <div
+                  ref={teamContentRef}
+                  className="will-change-transform font-body flex flex-col h-full"
+                  style={{ opacity: 0, transform: "translateY(40px)" }}
+                >
+                  {/* Section Header */}
+                  <div className="text-center pb-2 px-6 flex-shrink-0">
+                    <p className="text-sm uppercase tracking-[0.3em] text-[#0d9488] mb-2 font-medium font-body">
+                      The People
+                    </p>
+                    <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 tracking-tight">
+                      Meet Our Team
+                    </h2>
+                    <p className="mt-3 text-base text-gray-500 max-w-lg mx-auto font-body">
+                      The creative minds behind every event, every pixel, and every experience.
+                    </p>
+                  </div>
+
+                  {/* Faculty Advisor — centered above the carousel */}
+                  <div className="flex justify-center px-6 md:px-12 mb-4 flex-shrink-0">
+                    <div className="flex-shrink-0 w-[280px] sm:w-[300px] rounded-3xl border border-[#d4a853]/30 bg-white/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-6 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_12px_40px_rgba(212,168,83,0.15)] hover:bg-white/60 group">
+                      <div className="w-24 h-24 rounded-full flex items-center justify-center mb-5 shadow-lg" style={{ background: 'linear-gradient(135deg, #d4a853, #b8860b)' }}>
+                        <span className="text-2xl font-bold text-white drop-shadow-md">MGK</span>
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">Prof. Madhura G K</h3>
+                      <span className="inline-block rounded-full px-3 py-0.5 text-xs font-semibold text-white mb-3 tracking-wide uppercase" style={{ background: 'linear-gradient(135deg, #d4a853, #b8860b)' }}>
+                        Faculty Advisor
+                      </span>
+                      <p className="text-sm leading-relaxed" style={{ color: '#374151' }}>Guiding the club with wisdom and vision</p>
+                    </div>
+                  </div>
+
+                  {/* Carousel Track */}
+                  <div className="flex-1 flex items-center w-full px-6 md:px-12 min-h-0">
+                    <div
+                      ref={teamTrackRef}
+                      className="flex gap-6 will-change-transform pr-24"
+                      style={{ transform: "translateX(0px)", width: "max-content" }}
+                    >
+                      {teamMembers.map((member, i) => (
+                        <TeamCard key={i} member={member} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </section>
 
         {/* ============================================================ */}
         {/*  CONTACT SECTION                                              */}
         {/* ============================================================ */}
-        <section id="contact" className="relative z-10 min-h-screen w-full py-24 px-6 md:px-12 lg:px-20 overflow-hidden">
+        <section id="contact" className="relative z-10 min-h-screen w-full py-16 sm:py-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
           {/* Animated gradient mesh background */}
           <div className="absolute inset-0 bg-[#050510] z-0" />
           <div
@@ -737,12 +789,12 @@ export default function Home() {
 
           <div className="relative z-10 max-w-6xl mx-auto">
             {/* Header */}
-            <div className="text-center mb-16">
+            <div className="text-center mb-10 sm:mb-16">
               <p className="text-sm uppercase tracking-[0.3em] text-[#40e0d0] mb-3 font-medium" style={{ textShadow: '0 0 20px rgba(64,224,208,0.4)' }}>Get In Touch</p>
-              <h2 className="font-display text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight" style={{ textShadow: '0 0 60px rgba(255,255,255,0.08)' }}>
+              <h2 className="font-display text-3xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight" style={{ textShadow: '0 0 60px rgba(255,255,255,0.08)' }}>
                 Let&apos;s Create Together
               </h2>
-              <p className="mt-5 text-lg text-white/50 max-w-xl mx-auto leading-relaxed">
+              <p className="mt-4 sm:mt-5 text-base sm:text-lg text-white/50 max-w-xl mx-auto leading-relaxed">
                 Have a question, idea, or want to collaborate? We&apos;d love to hear from you.
               </p>
             </div>

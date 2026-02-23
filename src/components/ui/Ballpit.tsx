@@ -681,23 +681,26 @@ function createBallpit(canvas: HTMLCanvasElement, opts: any = {}) {
   const intersect = new a();
   let paused = false;
 
-  canvas.style.touchAction = 'none';
-  canvas.style.userSelect = 'none';
-  (canvas.style as any).webkitUserSelect = 'none';
+  let pointer: any = null;
+  if (opts.followCursor !== false) {
+    canvas.style.touchAction = 'none';
+    canvas.style.userSelect = 'none';
+    (canvas.style as any).webkitUserSelect = 'none';
 
-  const pointer = S({
-    domElement: canvas,
-    onMove() {
-      raycaster.setFromCamera(pointer.nPosition, three.camera);
-      three.camera.getWorldDirection(plane.normal);
-      raycaster.ray.intersectPlane(plane, intersect);
-      spheres.physics.center.copy(intersect);
-      spheres.config.controlSphere0 = true;
-    },
-    onLeave() {
-      spheres.config.controlSphere0 = false;
-    }
-  });
+    pointer = S({
+      domElement: canvas,
+      onMove() {
+        raycaster.setFromCamera(pointer.nPosition, three.camera);
+        three.camera.getWorldDirection(plane.normal);
+        raycaster.ray.intersectPlane(plane, intersect);
+        spheres.physics.center.copy(intersect);
+        spheres.config.controlSphere0 = true;
+      },
+      onLeave() {
+        spheres.config.controlSphere0 = false;
+      }
+    });
+  }
   function initialize(initOpts: any) {
     if (spheres) {
       three.clear();
@@ -725,7 +728,7 @@ function createBallpit(canvas: HTMLCanvasElement, opts: any = {}) {
       paused = !paused;
     },
     dispose() {
-      pointer.dispose();
+      pointer?.dispose();
       three.dispose();
     }
   };
